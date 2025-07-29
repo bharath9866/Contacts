@@ -39,6 +39,19 @@ android {
     buildFeatures {
         compose = true
     }
+
+
+    // Testing for Room Migration of exported Schema
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDir("$projectDir/schemas")
+        }
+    }
+}
+
+// Exporting Schema
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -55,6 +68,11 @@ dependencies {
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.57")
     ksp("com.google.dagger:hilt-compiler:2.57")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.7.2")
+    implementation("androidx.room:room-ktx:2.7.2")
+    ksp("androidx.room:room-compiler:2.7.2")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
